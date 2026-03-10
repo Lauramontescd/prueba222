@@ -80,6 +80,23 @@ df <- read.csv("11. Amazon Sales.csv", encoding = "UTF-8")
   summary(df_limpio)
   
   #Elimimacion de Outliers
+  # Calculo  de límites para 'actual_price' usando IQR
+Q1 <- quantile(df_limpio$actual_price, 0.25, na.rm = TRUE)
+Q3 <- quantile(df_limpio$actual_price, 0.75, na.rm = TRUE)
+IQR_val <- Q3 - Q1
+
+# Definicion de límites
+limite_inferior <- Q1 - 1.5 * IQR_val
+limite_superior <- Q3 + 1.5 * IQR_val
+
+# 2. Filtracion de datos
+df_sin_atipicos <- df_limpio %>%
+  filter(actual_price >= limite_inferior & actual_price <= limite_superior) %>%
+
+
+# Verificacion de registros
+nrow(df_sin_atipicos)
+
   
   
   
