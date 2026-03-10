@@ -1,0 +1,242 @@
+---
+# --- Metadatos Básicos ---
+title: "Analisis de Amazon sales"
+author:
+   - Douglas Barreto
+   - Laura Montes
+   - Alejandro Huerfano
+date: "Abril 2026"
+
+# --- Metadatos Específicos de Plantilla ---
+degree: "Computación I"
+director: 
+  - Jesus Ochoa 
+  - Oliver Triveño
+lugar: "Caracas"
+facultad: 
+  - Facultad de Ciencias Económicas y Sociales
+  - Escuela de Estadistica y Ciencias Actuariales
+# Ruta al escudo (relativa al archivo .Rmd)
+escudo: "Latex/Classes/Escudos/faces"
+
+# --- Bibliografía ---
+bibliography: bibliografia.bib
+
+# --- Configuración de Salida ---
+output: 
+  pdf_document:
+    template: template.tex  # Llamamos al archivo de plantilla
+    keep_tex: true                 # Útil para ver errores si ocurren
+    toc: true                      # Generar índice
+    number_sections: true
+    citation_package: natbib       # Importante: forzar natbib porque tu plantilla lo usa
+
+# --- Resumen (Abstract) ---
+abstract: |
+  Resumen del trabajo de investigación...
+---
+
+```{r setup, include=FALSE}
+# Configuración global de chunks
+knitr::opts_chunk$set(
+  echo = FALSE,        # Mostrar código
+  warning = FALSE,    # Ocultar advertencias
+  message = FALSE,    # Ocultar mensajes de carga
+  fig.align = "center",
+  out.width = "90%",
+  fig.pos = "H",
+  out.extra = ""
+)
+```{r, include=FALSE}
+# Cargar librerías necesarias
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(janitor)
+
+#Limpieza del dataframe
+df <- read.csv("11. Amazon Sales.csv", encoding = "UTF-8")
+  df_limpio <- df %>%
+  janitor::clean_names() %>%
+    
+  #Seleccion de variables a utilizar para el estudio
+  select(product_id, product_name, category, discounted_price, 
+         actual_price, discount_percentage, rating, rating_count, review_title)%>%
+         
+  # Limpieza de simbolos y comas
+  mutate(discounted_price = as.numeric(gsub("[^0-9.]", "", discounted_price)),
+    actual_price = as.numeric(gsub("[^0-9.]", "", actual_price)),
+    rating = as.numeric(rating), rating_count = as.numeric(gsub(",", "",  rating_count)),
+  # Convercion de porcentaje (ej. 50%) a decimal (0.50)
+    discount_percentage = as.numeric(gsub("%", "", discount_percentage)) / 100,
+    )
+  
+  #Verificacion e imputacion de NA's
+  
+  df_limpio <- df_limpio %>%
+  mutate(rating = replace_na(rating, mean(rating, na.rm = TRUE)), 
+         rating_count = replace_na(rating_count, mean(rating_count, na.rm = TRUE))) 
+  summary(df_limpio)
+  
+  #Elimimacion de Outliers
+  
+  
+  
+```
+
+\chapter*{Introducción}
+
+Introducción del trabajo de investigación
+
+\chapter{Planteamiento del Problema}
+Describir planteamiento del problema\
+
+Argumento final. Debido a esto, se plantea las siguientes preguntas de investigación:\
+
+
+\textbf{1.}	Pregunta1\
+
+\textbf{2.}	Pregunta2\
+
+\textbf{3.}	Pregunta3\
+
+
+\section{Justificación}
+
+Justificación del trabajo de investigación\
+
+\section{Objetivos}
+ 
+\subsection{Objetivo General}
+\begin{itemize}
+  \item{Describir objetivo general del trabajo de investigación}
+\end{itemize}
+
+\subsection{Objetivos Específicos}
+\begin{itemize}
+  \item{Describir objetivo 1 del trabajo de investigación}
+  \item{Describir objetivo 2 del trabajo de investigación}
+  \item{Describir objetivo 3 del trabajo de investigación}
+\end{itemize}
+
+
+\section{Cobertura}
+
+\subsection{Horizontal}
+
+Describir la cobertura Horizontal del trabajo de investigación\
+
+\begin{table}[ht]
+\centering
+\caption{Variables consideradas} 
+\resizebox{10cm}{!} {
+\begin{tabular}{ccc}
+  \hline
+\ \ \ \ \ NOMBRE DE LA VARIABLE \\ 
+  \hline
+   VARIABLE 1 \\ 
+VARIABLE 2\\ 
+VARIABLE n\\ 
+   \hline
+\end{tabular}
+}
+\end{table}
+
+\subsection{Vertical}
+
+Describir la cobertura Vertical del trabajo de investigación
+
+
+\section{Periodo de Referencia}
+
+Describir la fuente y el Periodo de Referencia utilizado en el trabajo de investigación
+
+\section{Variables}
+
+Describir la variable en estudio en el trabajo de investigación
+
+\chapter{Marco Teórico}
+
+
+\section{Bases Teóricas}
+
+Resumen de las bases teoricas explicadas en el capitulo y su importancia\
+
+\subsection{Definición 1}
+
+Descripción de la definición 1\
+
+\subsection{Definición 2}
+
+Descripción de la definición 2\
+
+\subsection{Definición n}
+
+Descripción de la definición n\
+
+
+\chapter{Marco Metódico}
+En esta sección se presentan las metodologías y/o test necesarios relacionados con la práctica divulgada en el marco teórico, así como las fuentes de datos.
+ 
+\section{Bases metódicas utilizadas en el trabajo de investigación}
+
+Desarrollo\
+
+\subsection{Item 1}
+
+Descripción\
+
+\subsection{Item 2}
+
+Descripción\
+
+\subsubsection{Item 2.2}
+
+Descripción\
+
+\subsection{Item n}
+
+Descripción\
+
+\chapter{Análisis de Resultados}
+
+{\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.}
+
+\section{Presentación de resultados 1}
+
+Descripción\
+
+\section{Presentación de resultados 2}
+
+Descripción\
+
+\section{Presentación de resultados n}
+
+Descripción\
+
+\chapter{Conclusiones y Recomendaciones}
+
+\textbf{1.-} Conclusion 1 del trabajo de investigación.\
+
+\textbf{Recomendación} 
+Recomendación 1 del trabajo de investigación.\
+
+\textbf{2.-} Conclusion 2 del trabajo de investigación.\
+
+\textbf{Recomendación} 
+Recomendación 2 del trabajo de investigación.\
+
+\textbf{n.-} Conclusion n del trabajo de investigación.\
+
+\textbf{Recomendación} Recomendación n del trabajo de investigación.\
+
+\appendix
+\renewcommand{\thechapter}{\Alph{chapter}}
+
+\chapter{Anexo A}
+
+\chapter{Anexo B}
+
+\chapter{Anexo C}
+
