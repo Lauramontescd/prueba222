@@ -70,7 +70,9 @@ df <- read.csv("11. Amazon Sales.csv", encoding = "UTF-8")
     rating = as.numeric(rating), rating_count = as.numeric(gsub(",", "",  rating_count)),
   # Convercion de porcentaje (ej. 50%) a decimal (0.50)
     discount_percentage = as.numeric(gsub("%", "", discount_percentage)) / 100,
-    )
+    ) 
+  # Recalculo de porcentajes
+  
   
   #Verificacion e imputacion de NA's
   
@@ -96,7 +98,7 @@ df_sin_atipicos <- df_limpio %>%
 
 # Verificacion de registros
 nrow(df_sin_atipicos)
-
+summary(df_sin_atipicos)
   
   
   
