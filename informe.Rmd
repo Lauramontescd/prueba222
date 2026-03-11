@@ -73,14 +73,16 @@ df_limpio <- df %>%
     discount_percentage = as.numeric(gsub("%", "", discount_percentage))/100,
     ) 
   # Recalculo de porcentajes
-
-df_limpio = df_limpio %>% mutate(discounted_price = actual_price * (1 - discount_percentage))
+  df_limpio <- df_limpio %>%
+  mutate(discounted_price = actual_price - (actual_price*discount_percentage),
+         discounted_price = round(discounted_price, 0))
   
-#Verificacion e imputacion de NA's  
-df_limpio <- df_limpio %>%
+  #Verificacion e imputacion de NA's
+  
+  df_limpio <- df_limpio %>%
   mutate(rating = replace_na(rating, mean(rating, na.rm = TRUE)), 
          rating_count = replace_na(rating_count, mean(rating_count, na.rm = TRUE))) 
-  summary(df_limpio)
+  
   
   #Elimimacion de Outliers
   # Calculo  de límites para 'actual_price' usando IQR
@@ -99,8 +101,7 @@ df_sin_atipicos <- df_limpio %>%
 
 # Verificacion de registros
 nrow(df_sin_atipicos)
-summary(df_sin_atipicos)
-  
+summary(df_sin_atipicos) 
   
   
 ```
