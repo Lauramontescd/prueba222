@@ -57,7 +57,7 @@ library(janitor)
 
 #Limpieza del dataframe
 df <- read.csv("11. Amazon Sales.csv", encoding = "UTF-8")
-  df_limpio <- df %>%
+df_limpio <- df %>%
   janitor::clean_names() %>%
     
   #Seleccion de variables a utilizar para el estudio
@@ -67,16 +67,17 @@ df <- read.csv("11. Amazon Sales.csv", encoding = "UTF-8")
   # Limpieza de simbolos y comas
   mutate(discounted_price = as.numeric(gsub("[^0-9.]", "", discounted_price)),
     actual_price = as.numeric(gsub("[^0-9.]", "", actual_price)),
-    rating = as.numeric(rating), rating_count = as.numeric(gsub(",", "",  rating_count)),
+    rating = as.numeric(rating), 
+    rating_count = as.numeric(gsub(",", "",  rating_count)),
   # Convercion de porcentaje (ej. 50%) a decimal (0.50)
-    discount_percentage = as.numeric(gsub("%", "", discount_percentage)) / 100,
+    discount_percentage = as.numeric(gsub("%", "", discount_percentage))/100,
     ) 
   # Recalculo de porcentajes
+
+df_limpio = df_limpio %>% mutate(discounted_price = actual_price * (1 - discount_percentage))
   
-  
-  #Verificacion e imputacion de NA's
-  
-  df_limpio <- df_limpio %>%
+#Verificacion e imputacion de NA's  
+df_limpio <- df_limpio %>%
   mutate(rating = replace_na(rating, mean(rating, na.rm = TRUE)), 
          rating_count = replace_na(rating_count, mean(rating_count, na.rm = TRUE))) 
   summary(df_limpio)
