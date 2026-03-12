@@ -262,3 +262,4 @@ Recomendación 2 del trabajo de investigación.\
 \chapter{Anexo C}
 
 hola laura como estás ya me llego la luz :D
+ya va esto es otro texto de prueba
