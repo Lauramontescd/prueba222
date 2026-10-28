@@ -1,4 +1,4 @@
---Creacion de tablas para el nuevo esquema normalizado de la base de datos
+--Creacion de tablas pra el evo esquema normalizado de la base de datos
 -- Tabla Condado
 CREATE TABLE county (
 	STATE varchar (2),
