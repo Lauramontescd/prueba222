@@ -1,0 +1,20 @@
+select Count(*) as otros_estados from fire_event fe
+WHERE fe.STATE = 'CA' or fe.STATE  = 'TX'or fe.STATE = 'OR'
+
+SELECT COUNT(*) AS total_registros
+FROM county 
+WHERE STATE IN ('CA', 'TX', 'OR');
+
+
+select * from county c 
+
+
+DELETE FROM fire_event
+WHERE STATE NOT IN ('CA', 'TX', 'OR');
+
+SELECT COUNT(*) AS TOTAL_POR_ESTADO from county fe 
+WHERE fe.STATE in ('CA', 'TX', 'OR')
+GROUP BY fe.STATE;
+
+DELETE FROM county
+WHERE STATE NOT IN ('CA', 'TX', 'OR');
