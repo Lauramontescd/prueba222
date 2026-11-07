@@ -96,7 +96,7 @@ limite_superior <- Q3 + 1.5 * IQR_val
 
 # 2. Filtracion de datos
 df_sin_atipicos <- df_limpio %>%
-  filter(actual_price >= limite_inferior & actual_price <= limite_superior) %>%
+  filter(actual_price >= limite_inferior & actual_price <= limite_superior) 
 
 
 # Verificacion de registros
