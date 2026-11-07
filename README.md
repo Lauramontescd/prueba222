@@ -1,2 +1,2 @@
 # prueba222
-prueba22
+![Banner del proyecto](assets/ESCUELA%20DE%20CIENCIAS%20ESTADISTICA%20Y%20ACTUARIALES.png)
